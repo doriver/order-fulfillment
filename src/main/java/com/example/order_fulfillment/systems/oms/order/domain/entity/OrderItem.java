@@ -1,0 +1,50 @@
+package com.example.order_fulfillment.systems.oms.order.domain.entity;
+
+import com.example.order_fulfillment.systems.store.OrderManageDTO;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(indexes = @Index(name = "idx_order", columnList = "order_id"))
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class OrderItem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT), nullable = false)
+    private Order order;
+
+    @Column(nullable = false)
+    private Long productId;
+
+    @Column(nullable = false, length = 200)
+    private String productName;
+
+    @Column(nullable = false)
+    private int quantity;
+
+    @Column(length = 50)
+    private String volume;  // 용량
+
+    private long weight;    // 무게 (g)
+
+    @Column(nullable = false)
+    private long unitPrice;
+
+    public static OrderItem from(Order order, OrderManageDTO.OrderItemDTO dto) {
+        OrderItem item = new OrderItem();
+        item.order = order;
+        item.productId = dto.productId();
+        item.productName = dto.productName();
+        item.quantity = dto.quantity();
+        item.volume = dto.volume();
+        item.weight = dto.weight();
+        item.unitPrice = dto.unitPrice();
+        return item;
+    }
+}
