@@ -9,9 +9,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -22,7 +19,6 @@ import java.time.LocalDateTime;
                 @Index(name = "idx_channel", columnList = "channel_id")
         }
 )
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
@@ -61,12 +57,13 @@ public class Order {
     @Column(nullable = false)
     private int shippingFee;
 
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    @Column(nullable = false)
+    @Column(
+            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
+            insertable = false, updatable = false // DB가 직접 입력하므로 ,JPA는 신경 끄라는 의미
+    )
     private LocalDateTime updatedAt;
 
     public static Order from(Channel channel, OrderManageDTO dto) {

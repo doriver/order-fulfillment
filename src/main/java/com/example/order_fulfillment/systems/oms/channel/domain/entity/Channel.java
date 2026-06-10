@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AccessLevel;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -14,8 +16,17 @@ public class Channel {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)
-    private String code;    // 판매처 코드 (storeCode)
+    private String code; // 판매처 코드 (storeCode)
 
     @Column(nullable = false, length = 100)
-    private String name;    // 판매처명
+    private String name; // 판매처 이름
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(
+            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
+            insertable = false, updatable = false // DB가 직접 입력하므로 ,JPA는 신경 끄라는 의미
+    )
+    private LocalDateTime updatedAt;
 }
