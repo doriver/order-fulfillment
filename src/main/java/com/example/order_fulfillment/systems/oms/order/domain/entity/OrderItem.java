@@ -22,7 +22,7 @@ public class OrderItem {
     private Order order;
 
     @Column(nullable = false)
-    private Long productId;
+    private String productCode;
 
     @Column(nullable = false, length = 200)
     private String productName;
@@ -50,7 +50,7 @@ public class OrderItem {
     public static OrderItem from(Order order, OrderReceiveDTO.OrderItemDTO dto) {
         OrderItem item = new OrderItem();
         item.order = order;
-        item.productId = dto.productId();
+        item.productCode = dto.productCode();
         item.productName = dto.productName();
         item.quantity = dto.quantity();
         item.volume = dto.volume();

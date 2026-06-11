@@ -25,7 +25,7 @@ public record OrderReceiveDTO(
         int shippingFee            // 배송비
 ) {
     public record OrderItemDTO(
-            Long productId,        // 판매처 상품 ID
+            String productCode,      // 판매처 상품 코드
             String productName,    // 상품명
             int quantity,          // 수량
             String volume,         // 용량
