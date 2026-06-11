@@ -9,6 +9,10 @@
 - FK 대신 참조 컬럼에 `@Index`를 사용한다.
 - JPA 연관관계는 `@ManyToOne(fetch = FetchType.LAZY)` 단방향만 사용한다. `@OneToMany`, `@OneToOne`, `@ManyToMany` 양방향 매핑은 사용하지 않는다.
 
+### DB 쿼리
+
+- JPA를 기본으로 하되, 동적쿼리나 복잡한 쿼리등은 MyBatis를 사용한다.
+
 ### 예외 처리
 
 - 예외는 `Expected4xxException` (클라이언트 오류) 또는 `Expected5xxException` (서버 오류)을 사용한다.
