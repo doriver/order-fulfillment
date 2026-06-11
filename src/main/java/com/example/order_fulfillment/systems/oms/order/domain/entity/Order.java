@@ -4,6 +4,7 @@ import com.example.order_fulfillment.systems.oms.channel.domain.entity.Channel;
 import com.example.order_fulfillment.systems.oms.order.domain.entity.embed.Buyer;
 import com.example.order_fulfillment.systems.oms.order.domain.entity.embed.OrderDelivery;
 import com.example.order_fulfillment.systems.oms.order.presentation.dto.OrderReceiveDTO;
+import com.example.order_fulfillment.systems.oms.zone.domain.entity.DeliveryZone;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
         name = "orders",
         indexes = {
                 @Index(name = "idx_channel", columnList = "channel_id")
+                , @Index(name = "idx_delivery_zone", columnList = "delivery_zone_code")
         }
 )
 @Getter
@@ -48,6 +50,11 @@ public class Order {
     @Embedded
     private OrderDelivery orderDelivery;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_zone_code", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT), nullable = false)
+    @NotNull
+    private DeliveryZone deliveryZone;
+
     @Column(nullable = false)
     private long totalAmount;
 
@@ -66,7 +73,7 @@ public class Order {
     )
     private LocalDateTime updatedAt;
 
-    public static Order from(Channel channel, OrderReceiveDTO dto) {
+    public static Order from(Channel channel, OrderReceiveDTO dto, DeliveryZone deliveryZone) {
         Order order = new Order();
         order.channel = channel;
         order.storeOrderId = dto.storeOrderId();
@@ -78,6 +85,7 @@ public class Order {
                 dto.receiverAddress(), dto.receiverAddressDetail(),
                 dto.deliveryMemo()
         );
+        order.deliveryZone = deliveryZone;
         order.totalAmount = dto.totalAmount();
         order.actualPayment = dto.actualPayment();
         order.shippingFee = dto.shippingFee();

@@ -1,6 +1,7 @@
 package com.example.order_fulfillment.systems.oms.order.domain.entity;
 
 import com.example.order_fulfillment.systems.oms.order.presentation.dto.OrderReceiveDTO;
+import com.example.order_fulfillment.systems.oms.product.domain.entity.SkuOms;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,7 +10,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(indexes = @Index(name = "idx_order", columnList = "order_id"))
+@Table(indexes = {
+        @Index(name = "idx_order", columnList = "order_id"),
+        @Index(name = "idx_sku_oms", columnList = "sku_oms_code")
+})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
@@ -26,6 +30,10 @@ public class OrderItem {
 
     @Column(nullable = false, length = 200)
     private String productName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sku_oms_code", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT), nullable = false)
+    private SkuOms skuOms;
 
     @Column(nullable = false)
     private int quantity;
@@ -47,11 +55,12 @@ public class OrderItem {
     )
     private LocalDateTime updatedAt;
 
-    public static OrderItem from(Order order, OrderReceiveDTO.OrderItemDTO dto) {
+    public static OrderItem from(Order order, OrderReceiveDTO.OrderItemDTO dto, SkuOms skuOms) {
         OrderItem item = new OrderItem();
         item.order = order;
         item.productCode = dto.productCode();
         item.productName = dto.productName();
+        item.skuOms = skuOms;
         item.quantity = dto.quantity();
         item.volume = dto.volume();
         item.weight = dto.weight();
