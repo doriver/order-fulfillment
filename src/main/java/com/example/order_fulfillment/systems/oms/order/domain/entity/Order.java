@@ -3,7 +3,7 @@ package com.example.order_fulfillment.systems.oms.order.domain.entity;
 import com.example.order_fulfillment.systems.oms.channel.domain.entity.Channel;
 import com.example.order_fulfillment.systems.oms.order.domain.entity.embed.Buyer;
 import com.example.order_fulfillment.systems.oms.order.domain.entity.embed.OrderDelivery;
-import com.example.order_fulfillment.systems.store.OrderManageDTO;
+import com.example.order_fulfillment.systems.oms.order.presentation.dto.OrderReceiveDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -66,7 +66,7 @@ public class Order {
     )
     private LocalDateTime updatedAt;
 
-    public static Order from(Channel channel, OrderManageDTO dto) {
+    public static Order from(Channel channel, OrderReceiveDTO dto) {
         Order order = new Order();
         order.channel = channel;
         order.storeOrderId = dto.storeOrderId();

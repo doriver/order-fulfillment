@@ -1,9 +1,9 @@
-package com.example.order_fulfillment.systems.store;
+package com.example.order_fulfillment.systems.oms.order.presentation.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record OrderManageDTO(
+public record OrderReceiveDTO(
         String storeCode,          // 판매처 코드
         Long storeOrderId,         // 판매처 주문 ID
         LocalDateTime paidAt,      // 결제완료 일시

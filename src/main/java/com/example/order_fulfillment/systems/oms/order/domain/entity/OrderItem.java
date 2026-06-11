@@ -1,6 +1,6 @@
 package com.example.order_fulfillment.systems.oms.order.domain.entity;
 
-import com.example.order_fulfillment.systems.store.OrderManageDTO;
+import com.example.order_fulfillment.systems.oms.order.presentation.dto.OrderReceiveDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -47,7 +47,7 @@ public class OrderItem {
     )
     private LocalDateTime updatedAt;
 
-    public static OrderItem from(Order order, OrderManageDTO.OrderItemDTO dto) {
+    public static OrderItem from(Order order, OrderReceiveDTO.OrderItemDTO dto) {
         OrderItem item = new OrderItem();
         item.order = order;
         item.productId = dto.productId();
