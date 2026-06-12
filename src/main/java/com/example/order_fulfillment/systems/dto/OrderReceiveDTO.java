@@ -1,8 +1,10 @@
-package com.example.order_fulfillment.systems.oms.order.presentation.dto;
+package com.example.order_fulfillment.systems.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+/*
+    판매처의 결제완료된 주문을 oms에서 받기위해 사용되는 데이터
+ */
 public record OrderReceiveDTO(
         String storeCode,          // 판매처 코드
         Long storeOrderId,         // 판매처 주문 ID
