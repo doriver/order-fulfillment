@@ -1,6 +1,6 @@
 package com.example.order_fulfillment.systems.oms.order.domain.entity;
 
-import com.example.order_fulfillment.systems.oms.order.presentation.dto.OrderReceiveDTO;
+import com.example.order_fulfillment.systems.dto.OrderReceiveDTO;
 import com.example.order_fulfillment.systems.oms.product.domain.entity.SkuOms;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

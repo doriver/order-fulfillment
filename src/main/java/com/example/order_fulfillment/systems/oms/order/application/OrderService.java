@@ -6,7 +6,9 @@ import com.example.order_fulfillment.systems.oms.order.domain.entity.Order;
 import com.example.order_fulfillment.systems.oms.order.domain.entity.OrderItem;
 import com.example.order_fulfillment.systems.oms.order.domain.repository.OrderItemRepository;
 import com.example.order_fulfillment.systems.oms.order.domain.repository.OrderRepository;
-import com.example.order_fulfillment.systems.oms.order.presentation.dto.OrderReceiveDTO;
+import com.example.order_fulfillment.systems.dto.TmsOrderDTO;
+import com.example.order_fulfillment.systems.dto.WmsOrderDTO;
+import com.example.order_fulfillment.systems.dto.OrderReceiveDTO;
 import com.example.order_fulfillment.systems.oms.product.domain.entity.SkuMappingOms;
 import com.example.order_fulfillment.systems.oms.product.domain.repository.SkuMappingOmsRepository;
 import com.example.order_fulfillment.systems.oms.zone.domain.entity.DeliveryZone;
@@ -57,5 +59,30 @@ public class OrderService {
         orderItemRepository.saveAll(items);
 
         return order.getId();
+    }
+
+    /*
+        주문 조회후, 특정 데이터들 WMS,TMS에게 전달
+     */
+    @Transactional(readOnly = true)
+    public void sendToWmsTms(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new Expected4xxException(ErrorCode.NOT_FOUND_ORDER));
+
+        List<OrderItem> items = orderItemRepository.findByOrder(order);
+
+        WmsOrderDTO wmsOrderDTO = new WmsOrderDTO(
+                items.stream().map(WmsOrderDTO.Item::from).toList()
+        );
+
+        TmsOrderDTO tmsOrderDTO = TmsOrderDTO.from(order);
+
+        /*
+            실제론 WMS, TMS에게 전송하는 로직 필요
+            이벤트 기반 아키텍쳐 사용 예정
+
+            메시지 브로커(Kafka / RabbitMQ) 사용
+            이벤트를 발행하고, WMS/TMS가 각자 구독해서 처리
+         */
     }
 }
