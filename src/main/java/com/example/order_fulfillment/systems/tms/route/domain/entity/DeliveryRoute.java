@@ -35,4 +35,12 @@ public class DeliveryRoute {
             insertable = false, updatable = false // DB가 직접 입력하므로 ,JPA는 신경 끄라는 의미
     )
     private LocalDateTime updatedAt;
+
+    public static DeliveryRoute create(String code, String name) {
+        DeliveryRoute route = new DeliveryRoute();
+        route.code = code;
+        route.name = name;
+        route.isActive = true;
+        return route;
+    }
 }
