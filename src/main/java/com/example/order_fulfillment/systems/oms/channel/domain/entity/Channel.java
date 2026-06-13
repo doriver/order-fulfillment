@@ -29,4 +29,11 @@ public class Channel {
             insertable = false, updatable = false // DB가 직접 입력하므로 ,JPA는 신경 끄라는 의미
     )
     private LocalDateTime updatedAt;
+
+    public static Channel create(String code, String name) {
+        Channel channel = new Channel();
+        channel.code = code;
+        channel.name = name;
+        return channel;
+    }
 }
