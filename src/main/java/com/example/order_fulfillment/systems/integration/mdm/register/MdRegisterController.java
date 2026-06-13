@@ -2,6 +2,7 @@ package com.example.order_fulfillment.systems.integration.mdm.register;
 
 import com.example.order_fulfillment.common.ApiResponse;
 import com.example.order_fulfillment.systems.integration.mdm.register.dto.ChannelRegisterDTO;
+import com.example.order_fulfillment.systems.integration.mdm.register.dto.ZoneRegisterDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,9 @@ public class MdRegisterController {
     }
 
     // 권역 등록
-    public void registerZone() {
-
+    @PostMapping("/zones")
+    public ApiResponse<String> registerZone(@RequestBody @Valid ZoneRegisterDTO dto) {
+        return ApiResponse.success(registerService.saveZone(dto), HttpStatus.CREATED);
     }
 
     public void registerLogisticsCenter() {

@@ -42,7 +42,7 @@ public class OrderService {
                 .orElseThrow(() -> new Expected4xxException(ErrorCode.NOT_FOUND_CHANNEL));
         // 배송권역 매핑
         Zone zone = zoneRepository.findByAddress(dto.receiverAddress())
-                .orElseThrow(() -> new Expected5xxException(ErrorCode.NOT_FOUND_DELIVERY_ZONE));
+                .orElseThrow(() -> new Expected5xxException(ErrorCode.NOT_FOUND_ZONE));
 
         Order order = orderRepository.save(Order.from(channel, dto, zone));
 

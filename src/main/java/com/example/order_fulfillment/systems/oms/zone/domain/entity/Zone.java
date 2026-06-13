@@ -20,9 +20,6 @@ public class Zone {
     private String code; // 권역 코드
 
     @Column(nullable = false, length = 100)
-    private String name; // 권역명
-
-    @Column(nullable = false, length = 100)
     private String region; // 해당 지역
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,4 +39,13 @@ public class Zone {
             insertable = false, updatable = false // DB가 직접 입력하므로 ,JPA는 신경 끄라는 의미
     )
     private LocalDateTime updatedAt;
+
+    public static Zone create(String code, String region, RegionType regionType, Zone parentZone) {
+        Zone zone = new Zone();
+        zone.code = code;
+        zone.region = region;
+        zone.regionType = regionType;
+        zone.parentZone = parentZone;
+        return zone;
+    }
 }
