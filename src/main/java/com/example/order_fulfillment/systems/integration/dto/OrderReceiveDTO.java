@@ -1,4 +1,4 @@
-package com.example.order_fulfillment.systems.dto;
+package com.example.order_fulfillment.systems.integration.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;

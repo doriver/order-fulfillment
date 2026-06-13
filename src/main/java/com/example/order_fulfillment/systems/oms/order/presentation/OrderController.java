@@ -2,7 +2,7 @@ package com.example.order_fulfillment.systems.oms.order.presentation;
 
 import com.example.order_fulfillment.common.ApiResponse;
 import com.example.order_fulfillment.systems.oms.order.application.OrderService;
-import com.example.order_fulfillment.systems.dto.OrderReceiveDTO;
+import com.example.order_fulfillment.systems.integration.dto.OrderReceiveDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

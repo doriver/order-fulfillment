@@ -1,7 +1,7 @@
 package com.example.order_fulfillment.systems.tms.route.application;
 
-import com.example.order_fulfillment.systems.dto.TmsOrderDTO;
-import com.example.order_fulfillment.systems.dto.OrderRoutePossibleDTO;
+import com.example.order_fulfillment.systems.integration.dto.TmsOrderDTO;
+import com.example.order_fulfillment.systems.integration.dto.OrderRoutePossibleDTO;
 import com.example.order_fulfillment.systems.tms.route.domain.entity.DeliveryRoute;
 import com.example.order_fulfillment.systems.tms.route.domain.entity.LoadingCenter;
 import com.example.order_fulfillment.systems.tms.route.domain.entity.RouteSchedule;

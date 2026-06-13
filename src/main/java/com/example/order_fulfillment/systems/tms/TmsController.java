@@ -1,8 +1,8 @@
 package com.example.order_fulfillment.systems.tms;
 
 import com.example.order_fulfillment.common.ApiResponse;
-import com.example.order_fulfillment.systems.dto.OrderRoutePossibleDTO;
-import com.example.order_fulfillment.systems.dto.TmsOrderDTO;
+import com.example.order_fulfillment.systems.integration.dto.OrderRoutePossibleDTO;
+import com.example.order_fulfillment.systems.integration.dto.TmsOrderDTO;
 import com.example.order_fulfillment.systems.tms.route.application.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.example.order_fulfillment.systems.dto;
+package com.example.order_fulfillment.systems.integration.dto;
 
 import com.example.order_fulfillment.systems.tms.route.domain.entity.DeliveryRoute;
 import com.example.order_fulfillment.systems.tms.route.domain.entity.LoadingCenter;
