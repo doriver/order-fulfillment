@@ -1,4 +1,4 @@
-package com.example.order_fulfillment.systems.oms.order.presentation;
+package com.example.order_fulfillment.systems.oms;
 
 import com.example.order_fulfillment.common.ApiResponse;
 import com.example.order_fulfillment.systems.oms.order.application.OrderService;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/oms/api")
 @RequiredArgsConstructor
-public class OrderController {
+public class OmsController {
 
     private final OrderService orderService;
     /*
