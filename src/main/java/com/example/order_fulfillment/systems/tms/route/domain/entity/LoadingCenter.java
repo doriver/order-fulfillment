@@ -1,10 +1,35 @@
 package com.example.order_fulfillment.systems.tms.route.domain.entity;
 
-import jakarta.persistence.Entity;
+import com.example.order_fulfillment.systems.wms.warehouse.domain.entity.LogisticsCenter;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /*
     배송코스별 상차가능 센터
  */
 @Entity
+@Table(indexes = {
+        @Index(name = "idx_delivery_route", columnList = "delivery_route_code")
+        , @Index(name = "idx_logistics_center", columnList = "logistics_center_code")
+})
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LoadingCenter {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_route_code", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT), nullable = false)
+    @NotNull
+    private DeliveryRoute deliveryRoute;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "logistics_center_code", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT), nullable = false)
+    @NotNull
+    private LogisticsCenter logisticsCenter;
 }
