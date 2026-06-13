@@ -4,7 +4,7 @@ import com.example.order_fulfillment.systems.oms.channel.domain.entity.Channel;
 import com.example.order_fulfillment.systems.oms.order.domain.entity.embed.Buyer;
 import com.example.order_fulfillment.systems.oms.order.domain.entity.embed.OrderDelivery;
 import com.example.order_fulfillment.systems.dto.OrderReceiveDTO;
-import com.example.order_fulfillment.systems.oms.zone.domain.entity.DeliveryZone;
+import com.example.order_fulfillment.systems.oms.zone.domain.entity.Zone;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -53,7 +53,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_zone_code", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT), nullable = false)
     @NotNull
-    private DeliveryZone deliveryZone;
+    private Zone zone;
 
     @Column(nullable = false)
     private long totalAmount;
@@ -73,7 +73,7 @@ public class Order {
     )
     private LocalDateTime updatedAt;
 
-    public static Order from(Channel channel, OrderReceiveDTO dto, DeliveryZone deliveryZone) {
+    public static Order from(Channel channel, OrderReceiveDTO dto, Zone zone) {
         Order order = new Order();
         order.channel = channel;
         order.storeOrderId = dto.storeOrderId();
@@ -85,7 +85,7 @@ public class Order {
                 dto.receiverAddress(), dto.receiverAddressDetail(),
                 dto.deliveryMemo()
         );
-        order.deliveryZone = deliveryZone;
+        order.zone = zone;
         order.totalAmount = dto.totalAmount();
         order.actualPayment = dto.actualPayment();
         order.shippingFee = dto.shippingFee();

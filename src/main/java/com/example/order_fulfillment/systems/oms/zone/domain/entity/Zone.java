@@ -9,9 +9,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(indexes = {
+        @Index(name = "idx_zone", columnList = "parent_code")
+})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class DeliveryZone {
+public class Zone {
     @Id
     @Column(nullable = false, length = 20)
     private String code; // 권역 코드
@@ -21,6 +24,10 @@ public class DeliveryZone {
 
     @Column(nullable = false, length = 100)
     private String region; // 해당 지역
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_code", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Zone parentZone;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

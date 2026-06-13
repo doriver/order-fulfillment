@@ -11,8 +11,8 @@ import com.example.order_fulfillment.systems.dto.WmsOrderDTO;
 import com.example.order_fulfillment.systems.dto.OrderReceiveDTO;
 import com.example.order_fulfillment.systems.oms.product.domain.entity.SkuMappingOms;
 import com.example.order_fulfillment.systems.oms.product.domain.repository.SkuMappingOmsRepository;
-import com.example.order_fulfillment.systems.oms.zone.domain.entity.DeliveryZone;
-import com.example.order_fulfillment.systems.oms.zone.domain.repository.DeliveryZoneRepository;
+import com.example.order_fulfillment.systems.oms.zone.domain.entity.Zone;
+import com.example.order_fulfillment.systems.oms.zone.domain.repository.ZoneRepository;
 import com.example.order_fulfillment.common.exception.ErrorCode;
 import com.example.order_fulfillment.common.exception.Expected4xxException;
 import com.example.order_fulfillment.common.exception.Expected5xxException;
@@ -27,7 +27,7 @@ import java.util.List;
 public class OrderService {
 
     private final ChannelRepository channelRepository;
-    private final DeliveryZoneRepository deliveryZoneRepository;
+    private final ZoneRepository zoneRepository;
     private final SkuMappingOmsRepository skuMappingOmsRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
@@ -41,10 +41,10 @@ public class OrderService {
         Channel channel = channelRepository.findByCode(dto.storeCode())
                 .orElseThrow(() -> new Expected4xxException(ErrorCode.NOT_FOUND_CHANNEL));
         // 배송권역 매핑
-        DeliveryZone deliveryZone = deliveryZoneRepository.findByAddress(dto.receiverAddress())
+        Zone zone = zoneRepository.findByAddress(dto.receiverAddress())
                 .orElseThrow(() -> new Expected5xxException(ErrorCode.NOT_FOUND_DELIVERY_ZONE));
 
-        Order order = orderRepository.save(Order.from(channel, dto, deliveryZone));
+        Order order = orderRepository.save(Order.from(channel, dto, zone));
 
         List<OrderItem> items = dto.items().stream()
                 .map(itemDto -> {

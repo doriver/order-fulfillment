@@ -9,6 +9,6 @@ public record TmsOrderDTO(
         String deliveryZoneCode
 ) {
     public static TmsOrderDTO from(Order order) {
-        return new TmsOrderDTO(order.getDeliveryZone().getCode());
+        return new TmsOrderDTO(order.getZone().getCode());
     }
 }
