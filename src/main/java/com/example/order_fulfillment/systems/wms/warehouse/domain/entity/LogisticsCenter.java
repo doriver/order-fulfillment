@@ -24,4 +24,14 @@ public class LogisticsCenter {
     @NotNull
     private Zone zone;
 
+    @Column(nullable = false, length = 100)
+    private String name;
+
+    public static LogisticsCenter create(String code, String name, Zone zone) {
+        LogisticsCenter center = new LogisticsCenter();
+        center.code = code;
+        center.name = name;
+        center.zone = zone;
+        return center;
+    }
 }

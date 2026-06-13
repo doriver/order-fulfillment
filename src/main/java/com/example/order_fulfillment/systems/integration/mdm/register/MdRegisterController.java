@@ -2,6 +2,7 @@ package com.example.order_fulfillment.systems.integration.mdm.register;
 
 import com.example.order_fulfillment.common.ApiResponse;
 import com.example.order_fulfillment.systems.integration.mdm.register.dto.ChannelRegisterDTO;
+import com.example.order_fulfillment.systems.integration.mdm.register.dto.LogisticsCenterRegisterDTO;
 import com.example.order_fulfillment.systems.integration.mdm.register.dto.ZoneRegisterDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,10 @@ public class MdRegisterController {
         return ApiResponse.success(registerService.saveZone(dto), HttpStatus.CREATED);
     }
 
-    public void registerLogisticsCenter() {
-
+    // 물류센터 등록
+    @PostMapping("/logistics-centers")
+    public ApiResponse<String> registerLogisticsCenter(@RequestBody @Valid LogisticsCenterRegisterDTO dto) {
+        return ApiResponse.success(registerService.saveLogisticsCenter(dto), HttpStatus.CREATED);
     }
 
     public void registerDeliveryRoute() {
