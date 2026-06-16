@@ -28,4 +28,11 @@ public class Sku {
             insertable = false, updatable = false // DB가 직접 입력하므로 ,JPA는 신경 끄라는 의미
     )
     private LocalDateTime updatedAt;
+
+    public static Sku create(String code, String name) {
+        Sku sku = new Sku();
+        sku.code = code;
+        sku.name = name;
+        return sku;
+    }
 }

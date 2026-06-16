@@ -4,6 +4,7 @@ import com.example.order_fulfillment.common.ApiResponse;
 import com.example.order_fulfillment.systems.integration.mdm.register.dto.ChannelRegisterDTO;
 import com.example.order_fulfillment.systems.integration.mdm.register.dto.DeliveryRouteRegisterDTO;
 import com.example.order_fulfillment.systems.integration.mdm.register.dto.LogisticsCenterRegisterDTO;
+import com.example.order_fulfillment.systems.integration.mdm.register.dto.SkuRegisterDTO;
 import com.example.order_fulfillment.systems.integration.mdm.register.dto.ZoneRegisterDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,12 @@ public class MdRegisterController {
     @PostMapping("/delivery-routes")
     public ApiResponse<String> registerDeliveryRoute(@RequestBody @Valid DeliveryRouteRegisterDTO dto) {
         return ApiResponse.success(registerService.saveDeliveryRoute(dto), HttpStatus.CREATED);
+    }
+
+    // sku 등록
+    @PostMapping("/skus")
+    public ApiResponse<String> registerSku(@RequestBody @Valid SkuRegisterDTO dto) {
+        return ApiResponse.success(registerService.saveSku(dto), HttpStatus.CREATED);
     }
 
 }

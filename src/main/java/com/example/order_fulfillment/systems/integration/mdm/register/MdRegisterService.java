@@ -5,11 +5,16 @@ import com.example.order_fulfillment.common.exception.Expected4xxException;
 import com.example.order_fulfillment.systems.integration.mdm.register.dto.ChannelRegisterDTO;
 import com.example.order_fulfillment.systems.integration.mdm.register.dto.DeliveryRouteRegisterDTO;
 import com.example.order_fulfillment.systems.integration.mdm.register.dto.LogisticsCenterRegisterDTO;
+import com.example.order_fulfillment.systems.integration.mdm.register.dto.SkuRegisterDTO;
 import com.example.order_fulfillment.systems.integration.mdm.register.dto.ZoneRegisterDTO;
 import com.example.order_fulfillment.systems.oms.channel.domain.entity.Channel;
 import com.example.order_fulfillment.systems.oms.channel.domain.repository.ChannelRepository;
+import com.example.order_fulfillment.systems.oms.product.domain.entity.SkuOms;
+import com.example.order_fulfillment.systems.oms.product.domain.repository.SkuOmsRepository;
 import com.example.order_fulfillment.systems.oms.zone.domain.entity.Zone;
 import com.example.order_fulfillment.systems.oms.zone.domain.repository.ZoneRepository;
+import com.example.order_fulfillment.systems.wms.stock.domain.entity.Sku;
+import com.example.order_fulfillment.systems.wms.stock.domain.repository.SkuRepository;
 import com.example.order_fulfillment.systems.tms.route.domain.entity.DeliveryRoute;
 import com.example.order_fulfillment.systems.tms.route.domain.entity.DeliveryRouteNode;
 import com.example.order_fulfillment.systems.tms.route.domain.repository.DeliveryRouteNodeRepository;
@@ -34,6 +39,8 @@ public class MdRegisterService {
     private final LogisticsCenterRepository logisticsCenterRepository;
     private final DeliveryRouteRepository deliveryRouteRepository;
     private final DeliveryRouteNodeRepository deliveryRouteNodeRepository;
+    private final SkuRepository skuRepository;
+    private final SkuOmsRepository skuOmsRepository;
 
     @Transactional
     public Long saveChannel(ChannelRegisterDTO dto) {
@@ -74,5 +81,12 @@ public class MdRegisterService {
         deliveryRouteNodeRepository.saveAll(nodes);
 
         return route.getCode();
+    }
+
+    @Transactional
+    public String saveSku(SkuRegisterDTO dto) {
+        String code = skuRepository.save(Sku.create(dto.code(), dto.name())).getCode();
+        skuOmsRepository.save(SkuOms.create(code, dto.name()));
+        return code;
     }
 }
