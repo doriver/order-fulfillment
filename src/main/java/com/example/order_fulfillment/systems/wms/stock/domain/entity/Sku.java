@@ -1,7 +1,8 @@
-package com.example.order_fulfillment.systems.wms.warehouse.domain.entity;
+package com.example.order_fulfillment.systems.wms.stock.domain.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,23 +10,14 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(indexes = {
-        @Index(name = "idx_center", columnList = "center_code")
-})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Warehouse {
-
+public class Sku {
     @Id
     @Column(nullable = false, length = 100)
     private String code;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "center_code", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT), nullable = false)
-    @NotNull
-    private LogisticsCenter center;
-
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 200)
     private String name;
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
@@ -36,5 +28,4 @@ public class Warehouse {
             insertable = false, updatable = false // DB가 직접 입력하므로 ,JPA는 신경 끄라는 의미
     )
     private LocalDateTime updatedAt;
-
 }
