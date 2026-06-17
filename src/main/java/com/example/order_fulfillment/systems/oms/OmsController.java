@@ -3,6 +3,7 @@ package com.example.order_fulfillment.systems.oms;
 import com.example.order_fulfillment.common.ApiResponse;
 import com.example.order_fulfillment.systems.oms.order.application.OrderService;
 import com.example.order_fulfillment.systems.integration.dto.OrderReceiveDTO;
+import com.example.order_fulfillment.systems.integration.dto.OutboundDeliveryRequestDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -33,4 +34,23 @@ public class OmsController {
         orderService.sendToWmsTms(orderId);
         return ApiResponse.success();
     }
+
+    /*
+        출고, 배송 결정
+        - wms로부터 받은 센터별 재고 가능 정보, tms로부터 받은 배송코스 정보를 바탕으로
+          출고 센터와 배송 코스/회차를 결정
+     */
+    @Operation(summary = "출고 센터 및 배송 코스/회차 결정")
+    @PostMapping("/order/outbound-delivery")
+    public ApiResponse<String> determineOutboundDelivery(
+            @RequestBody OutboundDeliveryRequestDTO dto
+    ) {
+        orderService.determineOutboundDelivery(
+                dto.centerPossibles(),
+                dto.routePossibles()
+        );
+        return ApiResponse.success();
+    }
 }
+
+
